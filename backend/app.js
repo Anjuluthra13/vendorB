@@ -23,7 +23,7 @@ mongoose.connect(DB).then(() => {
 
 // CORS configuration to allow your frontend
 const corsOptions = {
-    origin: 'https://vendor-f-git-main-anjus-projects-17866cf8.vercel.app', // Your frontend URL
+    origin: '*', // Your frontend URL
     credentials: true, // Allow credentials such as cookies, auth headers
     optionsSuccessStatus: 200
 };
