@@ -87,6 +87,7 @@ app.post('/api/register', async (req, res) => {
 
     // Validate inputs
     if (!name || !age || !service || !phone || !email || !password) {
+        console.error('Validation Error: All fields are required');
         return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -94,6 +95,7 @@ app.post('/api/register', async (req, res) => {
         // Check if the vendor already exists
         const existingVendor = await Vendor.findOne({ email });
         if (existingVendor) {
+            console.error('Registration Error: Vendor already exists');
             return res.status(400).json({ message: 'Vendor already exists' });
         }
 
@@ -104,10 +106,11 @@ app.post('/api/register', async (req, res) => {
         const newVendor = new Vendor({ name, age, service, phone, email, password: hashedPassword });
         await newVendor.save();
 
+        console.log('Registration Success: Vendor registered successfully');
         return res.status(201).json({ message: 'Vendor registered successfully' });
     } catch (err) {
-        console.error("Error during registration:", err);
-        return res.status(500).json({ message: 'Server error during registration' });
+        console.error("Error during registration:", err); // Log the full error object
+        return res.status(500).json({ message: 'Server error during registration', error: err.message });
     }
 });
 
